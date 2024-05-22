@@ -1,26 +1,30 @@
 <?php
-error_reporting(0);
 
+
+header('access-control-allow-origin:*');
 header('Content-Type: application/json'); 
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: PUT');
+header('access-control-allow-headers: content-type, access-control-allow-headers,authorization, x-request-with');
 
 include('function.php'); 
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-if ($requestMethod == "POST") {
+if ($requestMethod == "PUT") {
+
         $inputData = json_decode(file_get_contents("php://inputs"),true);
-        
 
         if(empty($inputData)){
-           $storeUsers = storeUsers($_POST);
+
+           $updateUsers = updateUsers($_POST, $_GET);
 }
 
     else{
-        $storeUsers= storeUsers($inputData);
+
+        $updateUsers= updateUsers($inputData, $_GET);
     }
 
-    echo $storeUsers;
+    echo $updateUsers;
 }
 else
 {

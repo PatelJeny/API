@@ -121,5 +121,45 @@ function getUser($userParams){
 }
 
 
+function updateUsers($userInput , $userParams){
+    global $conn;
+
+    if(!isset($userParams['id'])){
+
+        return error('user id is not found');
+
+    }else{
+
+        return error('enter the user id');
+
+    }
+
+    $userId = mysqli_real_escape_string($conn,$userParams['id']);
+
+    $username = mysqli_real_escape_string($conn,$userInput['username']);
+    $password = mysqli_real_escape_string($conn,$userInput['password']);
+    $email = mysqli_real_escape_string($conn,$userInput['email']);
+
+        $query ="UPDATE users_1 SET username='$username',password='$password',email='$email' where id='$userId'";
+        $result= mysqli_query($conn,$query);
+
+
+        if($result){
+            $data = [
+                'message' => 'user updated'
+            ];
+            return json_encode($data); 
+
+        }
+        else{
+            $data = [
+                'message' => 'internal error'
+            ];
+            return json_encode($data); 
+        }
+    }
+
+
+
 
 ?>
